@@ -10,5 +10,5 @@ RUN pip3 install -r requirements.txt
 
 WORKDIR /opt/
 
-EEXPOSE 8502
+EXPOSE 8502
 CMD ["streamlit", "run", "app.py", "--server.port=8502"]
