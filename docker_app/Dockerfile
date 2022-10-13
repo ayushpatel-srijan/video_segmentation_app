@@ -7,7 +7,7 @@ COPY requirements.txt ./requirements.txt
 COPY  app /opt/
 
 RUN pip3 install -r requirements.txt
-RUN python -m nltk.downloader punkt
+RUN python3 -m nltk.downloader punkt
 WORKDIR /opt/
 
 EXPOSE 8502
