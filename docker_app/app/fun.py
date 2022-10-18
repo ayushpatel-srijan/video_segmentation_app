@@ -10,10 +10,10 @@ import streamlit as st
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import yake
 import uuid
-phrases = uuid.uuid4()
-splitted_videos = uuid.uuid4()
-chapters = uuid.uuid4()
-audios = uuid.uuid4()
+#phrases = uuid.uuid4()
+#splitted_videos = uuid.uuid4()
+#chapters = uuid.uuid4()
+#audios = uuid.uuid4()
 
 
 
@@ -99,7 +99,7 @@ def split_video(filename,data):
     
     folder_name=os.path.join("splitted_videos",folder_name)
     if not os.path.exists(folder_name):
-        folder_name = uuid.uuid4()
+        #folder_name = uuid.uuid4()
         os.mkdir(folder_name)
     print(data)
     for ind, i in enumerate(data):
@@ -215,7 +215,7 @@ def extract_chapters(filename):
     for ind ,i in enumerate(topics['results']):
         folder_name = filename[:-4]
         if not os.path.exists(folder_name):
-            folder_name = uuid.uuid4()
+            #folder_name = uuid.uuid4()
             os.mkdir(folder_name)
         start = i['timestamp']['start']# in seconds
         end =i['timestamp']['end'] # in seconds
