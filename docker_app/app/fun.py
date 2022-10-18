@@ -9,6 +9,13 @@ import shutil
 import streamlit as st
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import yake
+import uuid
+phrases = uuid.uuid4()
+splitted_videos = uuid.uuid4()
+chapters = uuid.uuid4()
+audios = uuid.uuid4()
+
+
 
 checkpoint = "philschmid/distilbart-cnn-12-6-samsum"
 tokenizer_samsum = AutoTokenizer.from_pretrained(checkpoint)
@@ -92,6 +99,7 @@ def split_video(filename,data):
     
     folder_name=os.path.join("splitted_videos",folder_name)
     if not os.path.exists(folder_name):
+        folder_name = uuid.uuid4()
         os.mkdir(folder_name)
     print(data)
     for ind, i in enumerate(data):
@@ -172,7 +180,7 @@ def get_response(response):
     return response
 
 def save_chapters(filename,chapters):
-    if not os.path.exists("Chapters"):
+    if not os.path.exists("chapters"):
         os.mkdir("chapters")
     with open(os.path.join("chapters",f"{filename[:-4]}_chapters.pkl"),'wb') as f:
         pickle.dump(chapters,f)
@@ -207,6 +215,7 @@ def extract_chapters(filename):
     for ind ,i in enumerate(topics['results']):
         folder_name = filename[:-4]
         if not os.path.exists(folder_name):
+            folder_name = uuid.uuid4()
             os.mkdir(folder_name)
         start = i['timestamp']['start']# in seconds
         end =i['timestamp']['end'] # in seconds
