@@ -172,7 +172,7 @@ def get_response(response):
     return response
 
 def save_chapters(filename,chapters):
-    if not os.path.exists("Chapters"):
+    if not os.path.exists("chapters"):
         os.mkdir("chapters")
     with open(os.path.join("chapters",f"{filename[:-4]}_chapters.pkl"),'wb') as f:
         pickle.dump(chapters,f)
