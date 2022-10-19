@@ -1,0 +1,8 @@
+-f https://download.pytorch.org/whl/torch_stable.html 
+torch==1.12.0+cpu
+moviepy
+nltk
+requests
+streamlit
+transformers
+yake
