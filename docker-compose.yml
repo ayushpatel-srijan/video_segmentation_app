@@ -6,3 +6,5 @@ services :
         container_name: video-segmentation-1
         ports:
           - "8502:8502"
+        environment:
+          - ASSEMBLY_API_KEY=${ASSEMBLY_API_KEY}
