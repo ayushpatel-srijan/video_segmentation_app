@@ -23,9 +23,9 @@ model_samsum = AutoModelForSeq2SeqLM.from_pretrained(checkpoint)
 
 #KEY = "00469c8069664c64a1a4e391f36d34fe"
 
-from dotenv import load_dotenv
-load_dotenv()
-KEY= os.getenv('ASSEMBLY_API_KEY')  
+#from dotenv import load_dotenv
+#load_dotenv()
+#KEY= os.getenv('ASSEMBLY_API_KEY')  
 
 def extract_with_yake(doc):
     print("Extracting with Yake")
