@@ -9,23 +9,13 @@ import shutil
 import streamlit as st
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import yake
-import uuid
-#phrases = uuid.uuid4()
-#splitted_videos = uuid.uuid4()
-#chapters = uuid.uuid4()
-#audios = uuid.uuid4()
-
-
 
 checkpoint = "philschmid/distilbart-cnn-12-6-samsum"
 tokenizer_samsum = AutoTokenizer.from_pretrained(checkpoint)
 model_samsum = AutoModelForSeq2SeqLM.from_pretrained(checkpoint)
 
-KEY = "00469c8069664c64a1a4e391f36d34fe"
 
-#from dotenv import load_dotenv
-#load_dotenv()
-#KEY= os.getenv('ASSEMBLY_API_KEY')  
+KEY = "00469c8069664c64a1a4e391f36d34fe"
 
 def extract_with_yake(doc):
     print("Extracting with Yake")
@@ -87,7 +77,6 @@ def group(chaps):
             f=i+1
             #new_chaps.append([s,e,chaps[i][2],abstractive_model_output(model_samsum, tokenizer_samsum,chunks=sum+" "+str(chaps[i][3]))])
             new_chaps.append([s,e,chaps[i][2],sum+" "+str(chaps[i][3])])
-
             sum=""
     return new_chaps
 
@@ -100,26 +89,21 @@ def split_video(filename,data):
         shutil.rmtree(folder_name)
     if not os.path.exists("splitted_videos"):
         os.mkdir("splitted_videos")
-    
     folder_name=os.path.join("splitted_videos",folder_name)
     if not os.path.exists(folder_name):
-        #folder_name = uuid.uuid4()
         os.mkdir(folder_name)
     print(data)
     for ind, i in enumerate(data):
         print("-->",os.path.join(folder_name,f"{ind}.mp4"))
         print("-->",f"{folder_name}\{ind}.mp4")
-
-        
         video_name = pretty(i[2].split('>')[-1])
         print(convert(i[0]/1000), convert(i[1]/1000),video_name)
         ffmpeg_extract_subclip(os.path.join("videos",filename), 
                             i[0]//1000, 
                             i[1]//1000,
-                            targetname=f"{folder_name}\{ind}.mp4")
-        vid_list.append([ind,f"{folder_name}\{ind}.mp4"])
+                            targetname=f"{folder_name}/{ind}.mp4")
+        vid_list.append([ind,f"{folder_name}/{ind}.mp4"])
     print("[INFO] Video Splitted")
-    
     return vid_list
 
 def PlayAudioSegment(filepath, start, end,ind,folder_name):
@@ -184,13 +168,24 @@ def get_response(response):
     return response
 
 def save_chapters(filename,chapters):
-    if not os.path.exists("chapters"):
+    if not os.path.exists("Chapters"):
         os.mkdir("chapters")
     with open(os.path.join("chapters",f"{filename[:-4]}_chapters.pkl"),'wb') as f:
         pickle.dump(chapters,f)
         
 def get_chapters(filename):
     with open(os.path.join("chapters",f"{filename[:-4]}_chapters.pkl"), 'rb') as f:
+        data = pickle.load(f)
+    return data
+
+def save_video_summary(filename,video_summary):
+    if not os.path.exists("Video summary"):
+        os.mkdir("Video summary")
+    with open(os.path.join("Video summary",f"{filename[:-4]}_video_summary.pkl"),'wb') as f:
+        pickle.dump(video_summary,f)
+        
+def get_video_summary(filename):
+    with open(os.path.join("Video summary",f"{filename[:-4]}_video_summary.pkl"), 'rb') as f:
         data = pickle.load(f)
     return data
 
@@ -214,12 +209,12 @@ def extract_chapters(filename):
     print("[INFO] Response received")
     topics= response.json()['iab_categories_result']
     imp_words= response.json()['auto_highlights_result']
+    video_summary=response.json()['chapters']
     phrases = extract_imp_phrases(imp_words)
     chapters=[]
     for ind ,i in enumerate(topics['results']):
         folder_name = filename[:-4]
         if not os.path.exists(folder_name):
-            #folder_name = uuid.uuid4()
             os.mkdir(folder_name)
         start = i['timestamp']['start']# in seconds
         end =i['timestamp']['end'] # in seconds
@@ -227,6 +222,8 @@ def extract_chapters(filename):
         chapters.append([start,end ,i['labels'][0]['label'],abstractive_model_output(model_samsum ,tokenizer_samsum,i['text'])])
     save_chapters(filename,chapters)
     save_phrases(filename,phrases)
+    save_video_summary(filename,video_summary)
+
     print("[INFO] Chapters Extracted")
 
     return response
