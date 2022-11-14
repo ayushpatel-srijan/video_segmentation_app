@@ -15,7 +15,8 @@ tokenizer_samsum = AutoTokenizer.from_pretrained(checkpoint)
 model_samsum = AutoModelForSeq2SeqLM.from_pretrained(checkpoint)
 
 
-KEY = "00469c8069664c64a1a4e391f36d34fe"
+#KEY = "00469c8069664c64a1a4e391f36d34fe"
+KEY = os.environ.get("ASSEMBLY_API_KEY", f'default_value')
 
 def extract_with_yake(doc):
     print("Extracting with Yake")
