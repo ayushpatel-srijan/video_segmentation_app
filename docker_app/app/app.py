@@ -48,6 +48,7 @@ with col1:
     
     if pl1:
         pressed=1
+        video_name = "news_vid_2.mp4"
                        
     if video_file or pressed == 1:
 
