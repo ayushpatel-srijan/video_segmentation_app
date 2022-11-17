@@ -32,7 +32,7 @@ with col1:
     st.header("Video")
     video_file = st.file_uploader('video', type = ['mp4'])
     pl1 = st.selectbox("Pre-loaded video 1")
-    if video_file:
+    #if video_file:
        
         #pl1 = st.radio("",horizontal=True,disabled=True,options=["Pre-loaded video 1","Pre-loaded video 2"])
     #else:
