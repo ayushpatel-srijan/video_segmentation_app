@@ -31,20 +31,24 @@ pressed=0
 with col1:
     st.header("Video")
     video_file = st.file_uploader('video', type = ['mp4'])
+    pl1 = st.selectbox("Pre-loaded video 1")
     if video_file:
-        pl1 = st.radio("",horizontal=True,disabled=True,options=["Pre-loaded video 1","Pre-loaded video 2"])
-    else:
-        pl1 = st.radio("",horizontal=True,disabled=False,options=["Pre-loaded video 1","Pre-loaded video 2"])
+       
+        #pl1 = st.radio("",horizontal=True,disabled=True,options=["Pre-loaded video 1","Pre-loaded video 2"])
+    #else:
+    #   pl1 = st.radio("",horizontal=True,disabled=False,options=["Pre-loaded video 1","Pre-loaded video 2"])
 
-
+    '''
     if pl1 =="Pre-loaded video 1":
         pressed=1
         video_name = "news_vid_2.mp4"
     if pl1=="Pre-loaded video 2":
         pressed=1
         video_name = "news_vid_aus.mp4"
-
-
+    '''
+    if pl1:
+        pressed=1
+                       
     if video_file or pressed == 1:
 
         if video_file:
