@@ -38,14 +38,14 @@ with col1:
     #else:
     #   pl1 = st.radio("",horizontal=True,disabled=False,options=["Pre-loaded video 1","Pre-loaded video 2"])
 
-    '''
-    if pl1 =="Pre-loaded video 1":
-        pressed=1
-        video_name = "news_vid_2.mp4"
-    if pl1=="Pre-loaded video 2":
-        pressed=1
-        video_name = "news_vid_aus.mp4"
-    '''
+    
+    #if pl1 =="Pre-loaded video 1":
+    #    pressed=1
+     #   video_name = "news_vid_2.mp4"
+    #if pl1=="Pre-loaded video 2":
+     #   pressed=1
+      #  video_name = "news_vid_aus.mp4"
+    
     if pl1:
         pressed=1
                        
